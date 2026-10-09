@@ -4,61 +4,285 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fbfcf8">
-  <meta name="description" content="freespaces — launching soon.">
-  <title>freespaces — Launching soon</title>
+  <meta name="description" content="Freespaces is creating a calmer, more glanceable way to navigate. A new riding companion is launching soon.">
+  <meta property="og:title" content="Freespaces — Find your way">
+  <meta property="og:description" content="A more considered way to navigate. Freespaces is launching soon.">
+  <meta property="og:image" content="https://freespaces.in/assets/freespaces-product-hero.jpg">
+  <title>Freespaces — Find your way</title>
   <style>
-    :root { color-scheme: light; --ink: #1d241d; --green: #367d58; --soft: #edf3e9; }
+    :root {
+      color-scheme: light;
+      --paper: #fbfcf8;
+      --ink: #1d241d;
+      --forest: #367d58;
+      --leaf: #8db77e;
+      --sage: #edf3e9;
+      --muted: #667063;
+      --line: #d8dfd3;
+      --glass: rgba(255, 255, 255, .66);
+      --glass-strong: rgba(255, 255, 255, .82);
+      --shadow: 0 24px 70px rgba(44, 65, 47, .10), 0 2px 10px rgba(44, 65, 47, .035);
+      --radius-xl: 34px;
+    }
     * { box-sizing: border-box; }
-    html, body { min-height: 100%; margin: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 50% 45%, rgba(226, 238, 219, .72), transparent 39%),
-        #fbfcf8;
+      margin: 0;
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse at 73% 5%, rgba(226, 238, 219, .62), transparent 38rem),
+        radial-gradient(ellipse at 7% 55%, rgba(239, 244, 235, .78), transparent 35rem),
+        var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .ambient {
-      position: fixed;
-      width: min(74vw, 660px);
-      aspect-ratio: 1;
-      border: 1px solid rgba(54, 125, 88, .09);
-      border-radius: 50%;
-      animation: breathe 8s ease-in-out infinite;
-      pointer-events: none;
+    a { color: inherit; text-decoration: none; }
+    .page-shell { width: min(1200px, calc(100% - 48px)); margin-inline: auto; }
+    .topbar-wrap { position: sticky; top: 14px; z-index: 10; padding-top: 14px; }
+    .topbar {
+      width: min(1200px, calc(100% - 48px)); margin: 0 auto; min-height: 68px;
+      display: flex; align-items: center; justify-content: space-between; gap: 28px;
+      padding: 10px 14px 10px 24px; border: 1px solid rgba(255,255,255,.86); border-radius: 24px;
+      background: rgba(255,255,255,.64); backdrop-filter: blur(24px) saturate(1.3); -webkit-backdrop-filter: blur(24px) saturate(1.3);
+      box-shadow: 0 8px 36px rgba(43, 62, 44, .075);
     }
-    .ambient::before, .ambient::after {
-      content: "";
-      position: absolute;
-      inset: 9%;
-      border: 1px solid rgba(54, 125, 88, .08);
-      border-radius: inherit;
+    .brand { font: 700 22px/1 -apple-system, BlinkMacSystemFont, "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.075em; }
+    .brand span { color: var(--forest); }
+    .nav-links { display: flex; align-items: center; gap: 32px; color: #596257; font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px;
+      padding: 0 18px; border: 1px solid rgba(54,125,88,.17); border-radius: 999px;
+      color: white; background: var(--forest); font-weight: 600; font-size: 14px;
+      box-shadow: 0 8px 18px rgba(54,125,88,.19); transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
     }
-    .ambient::after { inset: 19%; }
-    main { position: relative; z-index: 1; text-align: center; padding: 32px; animation: arrive 1.2s cubic-bezier(.2,.75,.25,1) both; }
-    .wordmark { margin: 0; font-size: clamp(54px, 10vw, 100px); line-height: 1; font-weight: 550; letter-spacing: -.075em; }
-    .wordmark span { color: var(--green); }
-    .divider { display: flex; align-items: center; justify-content: center; gap: 13px; margin: 27px auto 15px; color: #818a7e; }
-    .divider::before, .divider::after { content: ""; width: 34px; height: 1px; background: #d8dfd3; }
-    .spark { width: 7px; height: 7px; background: #8db77e; border-radius: 50%; box-shadow: 0 0 0 0 rgba(141,183,126,.42); animation: pulse 2.4s ease-out infinite; }
-    .tagline { margin: 0; color: #667063; font-size: clamp(15px, 2vw, 18px); letter-spacing: .12em; font-weight: 500; }
-    @keyframes breathe { 0%, 100% { transform: scale(.96); opacity: .65; } 50% { transform: scale(1.04); opacity: 1; } }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(141,183,126,.48); } 70%, 100% { box-shadow: 0 0 0 10px rgba(141,183,126,0); } }
-    @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); background: #2e6c4c; box-shadow: 0 12px 24px rgba(54,125,88,.25); }
+    .button.secondary { color: var(--ink); background: rgba(255,255,255,.7); box-shadow: none; border-color: rgba(29,36,29,.11); }
+    .button.secondary:hover { background: white; box-shadow: 0 9px 20px rgba(44,65,47,.08); }
+    .hero { min-height: 680px; padding: 76px 0 72px; display: grid; grid-template-columns: .91fr 1.09fr; align-items: center; gap: 34px; }
+    .hero-copy { position: relative; z-index: 1; padding: 14px 0 22px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--forest); font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 0 5px rgba(141,183,126,.14); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", "Segoe UI", sans-serif; }
+    h1 { max-width: 590px; margin: 22px 0 22px; font-size: clamp(48px, 6.3vw, 78px); line-height: 1.02; letter-spacing: -.075em; font-weight: 600; }
+    h1 em { color: var(--forest); font-style: normal; }
+    .hero-copy > p { max-width: 490px; margin-bottom: 30px; color: var(--muted); font-size: clamp(17px, 1.65vw, 20px); line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .soon-note { display: flex; align-items: center; gap: 9px; margin-top: 26px; color: #778073; font-size: 13px; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); animation: pulse 2.4s ease-out infinite; }
+    .hero-visual { min-width: 0; position: relative; }
+    .hero-image-frame { position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.95); border-radius: 42px; background: rgba(255,255,255,.55); box-shadow: var(--shadow); }
+    .hero-image-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,.88); }
+    .hero-image { display: block; width: 100%; aspect-ratio: 1 / .93; object-fit: cover; }
+    .float-card {
+      position: absolute; right: -10px; bottom: 34px; max-width: 230px; padding: 17px 19px;
+      border: 1px solid rgba(255,255,255,.82); border-radius: 22px; background: rgba(255,255,255,.72);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); box-shadow: 0 14px 38px rgba(36,53,39,.12);
+    }
+    .float-card small { display: block; margin-bottom: 5px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .float-card strong { display: block; color: var(--ink); font: 600 16px/1.35 -apple-system, BlinkMacSystemFont, "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.03em; }
+    .section { padding: 78px 0; }
+    .section-heading { max-width: 680px; margin: 0 auto 42px; text-align: center; }
+    .section-heading h2 { margin: 14px 0 13px; font-size: clamp(34px, 4.2vw, 52px); line-height: 1.08; letter-spacing: -.065em; font-weight: 600; }
+    .section-heading p { margin: 0 auto; max-width: 540px; color: var(--muted); font-size: 17px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature-card {
+      min-height: 232px; padding: 27px; border: 1px solid rgba(255,255,255,.9); border-radius: 27px;
+      background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 12px 38px rgba(44,65,47,.055);
+    }
+    .feature-icon { display: grid; place-items: center; width: 43px; height: 43px; margin-bottom: 28px; border: 1px solid rgba(54,125,88,.12); border-radius: 15px; color: var(--forest); background: var(--sage); }
+    .feature-card h3 { margin: 0 0 8px; font-size: 19px; letter-spacing: -.04em; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .story { display: grid; grid-template-columns: 1.06fr .94fr; align-items: center; gap: 56px; }
+    .story-image-wrap { position: relative; overflow: hidden; border: 1px solid white; border-radius: var(--radius-xl); background: var(--sage); box-shadow: var(--shadow); }
+    .story-image { display: block; width: 100%; aspect-ratio: 1 / .9; object-fit: cover; }
+    .story-caption { position: absolute; left: 18px; bottom: 18px; padding: 11px 15px; color: var(--ink); border: 1px solid rgba(255,255,255,.75); border-radius: 999px; background: rgba(255,255,255,.68); backdrop-filter: blur(18px); font-size: 12px; font-weight: 600; }
+    .story-copy h2 { margin: 16px 0; font-size: clamp(34px, 4vw, 50px); line-height: 1.08; letter-spacing: -.065em; font-weight: 600; }
+    .story-copy p { color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .mini-list { display: grid; gap: 15px; margin-top: 27px; }
+    .mini-item { display: flex; align-items: flex-start; gap: 12px; color: #485247; font-size: 14px; }
+    .check { flex: 0 0 auto; display: grid; place-items: center; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; color: var(--forest); background: var(--sage); }
+    .gallery { padding-top: 36px; }
+    .gallery-grid { display: grid; grid-template-columns: 1.08fr .92fr; grid-template-rows: 260px 260px; gap: 16px; }
+    .gallery-card { position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.9); border-radius: 27px; background: var(--sage); box-shadow: 0 10px 34px rgba(44,65,47,.06); }
+    .gallery-card:first-child { grid-row: span 2; }
+    .gallery-card img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .65s cubic-bezier(.2,.7,.25,1); }
+    .gallery-card:hover img { transform: scale(1.035); }
+    .gallery-label { position: absolute; left: 16px; bottom: 16px; padding: 9px 13px; border: 1px solid rgba(255,255,255,.8); border-radius: 999px; background: rgba(255,255,255,.73); backdrop-filter: blur(18px); color: #394439; font-size: 12px; font-weight: 600; }
+    .launch { padding: 72px 0 98px; }
+    .launch-panel {
+      position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 70px 24px; border: 1px solid rgba(255,255,255,.9); border-radius: 38px;
+      background: linear-gradient(135deg, rgba(237,243,233,.82), rgba(255,255,255,.74));
+      backdrop-filter: blur(24px); box-shadow: var(--shadow);
+    }
+    .launch-panel::before, .launch-panel::after { content: ""; position: absolute; width: 360px; aspect-ratio: 1; border: 1px solid rgba(54,125,88,.09); border-radius: 50%; pointer-events: none; }
+    .launch-panel::before { top: -230px; left: -110px; box-shadow: 0 0 0 32px rgba(54,125,88,.025), 0 0 0 64px rgba(54,125,88,.02); }
+    .launch-panel::after { right: -140px; bottom: -270px; box-shadow: 0 0 0 32px rgba(54,125,88,.025), 0 0 0 64px rgba(54,125,88,.02); }
+    .launch-panel > * { position: relative; z-index: 1; }
+    .launch-panel h2 { margin: 15px 0 12px; font-size: clamp(38px, 5vw, 60px); line-height: 1.06; letter-spacing: -.07em; font-weight: 600; }
+    .launch-panel p { max-width: 490px; margin-bottom: 25px; color: var(--muted); font-size: 16px; }
+    .footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0 32px; border-top: 1px solid rgba(54,125,88,.11); color: #7a8377; font-size: 12px; }
+    .footer .brand { color: var(--ink); font-size: 19px; }
+    .footer-note { display: flex; align-items: center; gap: 8px; }
+    .footer-note .live-dot { width: 6px; height: 6px; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(141,183,126,.44); } 70%,100% { box-shadow: 0 0 0 9px rgba(141,183,126,0); } }
+    @media (max-width: 900px) {
+      .hero { min-height: auto; grid-template-columns: 1fr; gap: 34px; padding-top: 70px; }
+      .hero-copy { max-width: 720px; }
+      .hero-image { aspect-ratio: 1.2 / 1; }
+      .float-card { right: 16px; bottom: 16px; }
+      .story { gap: 34px; }
+    }
+    @media (max-width: 680px) {
+      .page-shell, .topbar { width: min(100% - 28px, 560px); }
+      .topbar-wrap { top: 7px; padding-top: 7px; }
+      .topbar { min-height: 58px; padding: 8px 9px 8px 16px; border-radius: 19px; }
+      .brand { font-size: 20px; }
+      .nav-links { display: none; }
+      .nav-cta { min-height: 40px; padding: 0 14px; font-size: 12px; }
+      .hero { padding: 58px 0 52px; gap: 26px; }
+      h1 { font-size: clamp(45px, 13vw, 64px); }
+      .hero-copy > p { font-size: 16px; }
+      .hero-image-frame { border-radius: 28px; }
+      .hero-image { aspect-ratio: .98 / 1; }
+      .float-card { right: 10px; bottom: 10px; max-width: 188px; padding: 12px 14px; border-radius: 17px; }
+      .float-card strong { font-size: 14px; }
+      .section { padding: 56px 0; }
+      .section-heading { margin-bottom: 28px; }
+      .section-heading p { font-size: 15px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 11px; }
+      .feature-card { min-height: auto; padding: 22px; border-radius: 22px; }
+      .feature-icon { margin-bottom: 18px; }
+      .story { grid-template-columns: 1fr; gap: 28px; }
+      .story-image-wrap { border-radius: 25px; }
+      .story-image { aspect-ratio: 1 / .88; }
+      .gallery { padding-top: 12px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 205px 205px; gap: 10px; }
+      .gallery-card { border-radius: 20px; }
+      .gallery-card:first-child { grid-row: span 2; }
+      .gallery-label { left: 9px; bottom: 9px; padding: 8px 10px; font-size: 10px; }
+      .launch { padding: 50px 0 68px; }
+      .launch-panel { padding: 54px 20px; border-radius: 28px; }
+      .launch-panel h2 { font-size: 42px; }
+      .footer { align-items: flex-start; flex-direction: column; padding-bottom: 24px; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-  <div class="ambient" aria-hidden="true"></div>
-  <main>
-    <h1 class="wordmark">free<span>spaces</span></h1>
-    <div class="divider" aria-hidden="true"><span class="spark"></span></div>
-    <p class="tagline">LAUNCHING SOON</p>
+  <div class="topbar-wrap">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Freespaces home">free<span>spaces</span></a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#idea">The idea</a>
+        <a href="#details">A closer look</a>
+      </nav>
+      <a class="nav-cta" href="#launch">Launching soon <span aria-hidden="true">↗</span></a>
+    </header>
+  </div>
+
+  <main id="top">
+    <section class="hero page-shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> A new way to find your way</div>
+        <h1 id="hero-title">Keep your eyes up.<br><em>Your route in view.</em></h1>
+        <p>A compact, round navigation display designed to make the next turn easy to glance at—while your phone stays in the loop.</p>
+        <div class="hero-actions">
+          <a class="button" href="#launch">Discover Freespaces <span aria-hidden="true">↓</span></a>
+          <a class="button secondary" href="#idea">See the idea</a>
+        </div>
+        <div class="soon-note"><span class="live-dot"></span> Freespaces is launching soon</div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image-frame">
+          <img class="hero-image" src="assets/freespaces-product-hero.jpg" alt="A round graphite navigation display showing a green route, mounted on a handlebar-style bracket" fetchpriority="high">
+        </div>
+        <div class="float-card"><small>Designed for a glance</small><strong>Simple directions.<br>More of the ride.</strong></div>
+      </div>
+    </section>
+
+    <section class="section page-shell" id="idea" aria-labelledby="idea-title">
+      <div class="section-heading">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Less screen. More journey.</div>
+        <h2 id="idea-title">Navigation that feels out of the way.</h2>
+        <p>Freespaces brings the essential next step into a small, focused display, so getting there can feel a little more natural.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="M4 18.5 9.2 5.8a1 1 0 0 1 1.8 0l2.1 5.1 1.2-2.8a1 1 0 0 1 1.8 0L20 18.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 14h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3>Directions at a glance</h3>
+          <p>A clear route view puts the next move front and center, without asking you to study a full phone screen.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.2" stroke="currentColor" stroke-width="1.7"/><path d="M10 6h4M11 18h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3>Your phone, in the loop</h3>
+          <p>Pair the simple display with the familiar map experience on your phone, keeping the setup intuitive.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.3v5.2l3.2 1.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Made for the moment</h3>
+          <p>A compact form and focused interface designed to make navigation feel lighter on the move.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section page-shell" id="details" aria-labelledby="details-title">
+      <div class="story">
+        <div class="story-image-wrap">
+          <img class="story-image" src="assets/freespaces-on-ride.jpg" alt="The round navigation display mounted on a bicycle handlebar in soft evening light" loading="lazy">
+          <div class="story-caption">A clearer view of what’s next</div>
+        </div>
+        <div class="story-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Thoughtful by design</div>
+          <h2 id="details-title">A little more present on every route.</h2>
+          <p>Big maps are useful before a ride. In the middle of one, the next turn is often what matters. Freespaces is a new concept for bringing that moment into focus with a small round display and a considered, glanceable interface.</p>
+          <div class="mini-list">
+            <div class="mini-item"><span class="check" aria-hidden="true">✓</span><span>A compact display built around the route ahead</span></div>
+            <div class="mini-item"><span class="check" aria-hidden="true">✓</span><span>A phone companion for planning and context</span></div>
+            <div class="mini-item"><span class="check" aria-hidden="true">✓</span><span>A calm visual language designed to stay easy to read</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section page-shell gallery" aria-labelledby="gallery-title">
+      <div class="section-heading">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> A closer look</div>
+        <h2 id="gallery-title">Small details. A simpler view.</h2>
+        <p>From the round screen to the phone companion, every part keeps the route at the center.</p>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-card">
+          <img src="assets/freespaces-device-detail.jpg" alt="Close-up of the circular display, metal bezel and green route interface" loading="lazy">
+          <figcaption class="gallery-label">A focused route display</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/freespaces-phone-companion.jpg" alt="The circular display shown beside a phone with a matching map route" loading="lazy">
+          <figcaption class="gallery-label">Display and phone, together</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="launch page-shell" id="launch" aria-labelledby="launch-title">
+      <div class="launch-panel">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> The road ahead</div>
+        <h2 id="launch-title">A new perspective<br>is on its way.</h2>
+        <p>We’re shaping a more considered way to navigate. Freespaces is launching soon.</p>
+        <span class="button" aria-label="Freespaces launching soon">Launching soon <span aria-hidden="true">✳</span></span>
+      </div>
+    </section>
   </main>
+
+  <footer class="page-shell footer">
+    <a class="brand" href="#top" aria-label="Freespaces home">free<span>spaces</span></a>
+    <div class="footer-note"><span class="live-dot"></span> A little more space for the journey.</div>
+    <span>© <span id="year">2026</span> Freespaces</span>
+  </footer>
 </body>
 </html>
